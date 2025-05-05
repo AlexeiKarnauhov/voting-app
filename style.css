@@ -244,3 +244,12 @@ body {
     text-align: center;
   }
 }
+
+@media (max-width: 768px) {
+  #start-screen {
+    background-size: contain;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-color: #fff;
+  }
+}
