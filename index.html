@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Интерактивная система</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="start-screen">
+    <h1>Добро пожаловать в Цифровой профиль клиента Сбербанка!</h1>
+    <input type="text" id="username" placeholder="Введите ваше имя" />
+    <button id="start-button">Начать</button>
+  </div>  
+
+  <div id="app" class="hidden">
+    <div class="columns">
+      <div class="column" id="internal-column"></div>
+      <div class="photo-container">
+        <img id="background-image" src="" alt="Фото" />
+      </div>
+      <div class="column" id="external-column"></div>
+    </div>
+
+    <div id="vote-section" class="hidden">
+      <h3>Какое изображение вы считаете правильным?</h3>
+      <div id="vote-options"></div>
+      <div id="vote-timer">Осталось времени: <span id="countdown">20</span> сек</div>
+    </div>
+
+    <div id="result-section" class="hidden">
+      <div id="result-message"></div>
+      <button id="restart-button">Обновить профиль</button>
+    </div>
+
+    <div id="loading-screen" class="hidden">
+      <div class="loader"></div>
+      <p>Идет обновление Цифрового профиля!</p>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
