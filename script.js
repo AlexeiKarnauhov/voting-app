@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   let currentRound = 0;
   const rounds = 4;
-  const answers = ['Сбер', 'Приор', 'МТБ', 'Альфа', 'БеларусБанк'];
+  const answers = ['Бородко О.В.', 'Савченко А.А.', 'Демиденко Е.В.', 'Михайлова Н.В.', 'Иной'];
 
   const startScreen = document.getElementById('start-screen');
   const app = document.getElementById('app');

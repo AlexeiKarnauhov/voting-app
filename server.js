@@ -10,7 +10,7 @@ const io = new Server(server);
 const PORT = process.env.PORT || 3000;
 
 // ✅ Глобальные переменные
-let correctAnswer = 'Сбер';         // Один на всех — меняется через /reset
+let correctAnswer = 'Бородко О.В.';         // Один на всех — меняется через /reset
 let votes = [];
 let firstCorrectUser = null;
 
