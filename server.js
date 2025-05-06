@@ -28,6 +28,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('vote', (answer) => {
+      //для отладки:
+    //console.log(`[DEBUG] name: ${name}`);
+    //console.log(`[DEBUG] answer: '${answer}'`);
+    //console.log(`[DEBUG] correctAnswer: '${correctAnswer}'`);
+    //console.log(`[DEBUG] match:`, answer === correctAnswer);
+      //завершение отладки
     console.log(`Голос от ${userName}: ${answer}`);
     
     const isCorrect = answer === correctAnswer;
