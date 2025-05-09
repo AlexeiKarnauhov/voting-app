@@ -136,11 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     localStorage.setItem('username', username);
-    socket.emit('register', username);  
+    socket.emit('register', username);
+
     startScreen.style.display = 'none';
     app.classList.remove('hidden');
     columns.forEach(el => el.classList.remove('blur'));
     loadingScreen.classList.add('hidden');
+
+    correctAnswer = answers[currentRound]; // ⬅️ СИНХРОНИЗАЦИЯ СЕРВЕРА
+    fetch(`/reset?answer=${encodeURIComponent(correctAnswer)}`);
+
     loadData();
     setTimeout(displayVotingOptions, 2000);
   };
