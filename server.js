@@ -7,6 +7,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
+app.use(express.json()); // чтобы обрабатывать JSON в POST-запросах
+
 const PORT = process.env.PORT || 3000;
 
 // ✅ Глобальные переменные
@@ -68,6 +70,25 @@ app.get('/reset', (req, res) => {
   }  
 
   res.send({ status: 'ok' });
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(__dirname + '/admin.html');
+});
+
+app.get('/results', (req, res) => {
+  res.json({
+    votes,
+    correctAnswer
+  });
+});
+
+app.post('/reset-all', (req, res) => {
+  votes = [];
+  firstCorrectUser = null;
+  correctAnswer = 'Бородко Олег'; // можно задать начальный
+  console.log('🔁 Все данные сброшены админом');
+  res.json({ status: 'ok' });
 });
 
 // Запуск сервера

@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   let currentRound = 0;
-  const rounds = 4;
+  
   const answers = ['Бородко Олег', 'Савченко Андрей', 'Демиденко Елена', 'Михайлова Наталья', 'Подольский Дмитрий', 'Елисеев Евгений', 'Липатова Елена'];
+  const rounds = answers.length;
 
   const startScreen = document.getElementById('start-screen');
   const app = document.getElementById('app');
