@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resultSection.classList.remove('hidden');
 
-    // 👑 Всплывающее уведомление, если пользователь был первым правильно ответившим
+    // Всплывающее уведомление, если пользователь был первым правильно ответившим
     if (firstCorrectUser === localStorage.getItem('username')) {
       const popup = document.createElement('div');
       popup.textContent = '🎉 Вы первый правильно ответивший!';
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     
       setTimeout(() => {
-        // ✅ reset вызывается после завершения всех изменений и перехода
+        // reset вызывается после завершения всех изменений и перехода
         const nextCorrectAnswer = answers[currentRound % rounds];
         fetch(`/reset?answer=${encodeURIComponent(nextCorrectAnswer)}`);
     
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     columns.forEach(el => el.classList.remove('blur'));
     loadingScreen.classList.add('hidden');
 
-    correctAnswer = answers[currentRound]; // ⬅️ СИНХРОНИЗАЦИЯ СЕРВЕРА
+    correctAnswer = answers[currentRound]; // СИНХРОНИЗАЦИЯ СЕРВЕРА
     fetch(`/reset?answer=${encodeURIComponent(correctAnswer)}`);
 
     loadData();
