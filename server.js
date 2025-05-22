@@ -39,18 +39,28 @@ io.on('connection', (socket) => {
     console.log(`Голос от ${userName}: ${answer}`);
     
     const isCorrect = answer === correctAnswer;
-    votes.push({ name: userName, answer, time: Date.now() });
+    const isFirst = isCorrect && !votes.some(v => v.isCorrect && v.correctAnswer === correctAnswer);
+    
+    votes.push({
+      name: userName,
+      answer,
+      time: Date.now(),
+      correctAnswer,
+      isCorrect,
+      first: isFirst
+    });
 
-    if (isCorrect && !firstCorrectUser) {
-      firstCorrectUser = userName;
-    }
+
+    //if (isCorrect && !firstCorrectUser) {
+      //firstCorrectUser = userName;
+    //}
 
     // Отправляем результат клиенту
     socket.emit('vote_result', {
       correctAnswer,
       yourAnswer: answer,
       isCorrect,
-      firstCorrectUser
+      isFirstCorrect: isFirst
     });
   });
 
@@ -61,7 +71,7 @@ io.on('connection', (socket) => {
 
 // ✅ Сброс раунда и установка нового правильного ответа
 app.get('/reset', (req, res) => {
-  votes = [];
+  //votes = [];
   firstCorrectUser = null;
 
   if (req.query.answer) {
@@ -77,9 +87,33 @@ app.get('/admin', (req, res) => {
 });
 
 app.get('/results', (req, res) => {
+  const summary = {};
+
+  votes.forEach(vote => {
+    if (!summary[vote.name]) {
+      summary[vote.name] = {
+        name: vote.name,
+        correct: 0,
+        total: 0,
+        firstCorrects: 0
+      };
+    }
+
+    summary[vote.name].total++;
+
+    if (vote.isCorrect) {
+      summary[vote.name].correct++;
+    }
+
+    if (vote.first) {
+      summary[vote.name].firstCorrects++;
+    }
+  });
+
   res.json({
     votes,
-    correctAnswer
+    correctAnswer,
+    summary: Object.values(summary)
   });
 });
 

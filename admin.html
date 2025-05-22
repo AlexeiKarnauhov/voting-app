@@ -9,12 +9,27 @@
     th, td { padding: 8px 12px; border: 1px solid #ccc; text-align: left; }
     th { background: #f9f9f9; }
     button { padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; }
-    h1 { margin-bottom: 10px; }
+    h1, h2 { margin-bottom: 10px; }
   </style>
 </head>
 <body>
   <h1>Админ-панель голосования</h1>
   <button onclick="resetAll()">🔁 Сбросить всё</button>
+
+  <h2>Сводка по пользователям</h2>
+  <table id="summary-table">
+    <thead>
+      <tr>
+        <th>Имя</th>
+        <th>Всего ответов</th>
+        <th>Правильных</th>
+        <th>Первым правильно</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>История голосований</h2>
   <table id="results-table">
     <thead>
       <tr>
@@ -31,18 +46,33 @@
     async function fetchResults() {
       const res = await fetch('/results');
       const data = await res.json();
-      const tbody = document.querySelector('#results-table tbody');
-      tbody.innerHTML = '';
 
+      // таблица по голосам
+      const voteBody = document.querySelector('#results-table tbody');
+      voteBody.innerHTML = '';
       data.votes.forEach(vote => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td>${vote.name}</td>
           <td>${vote.answer}</td>
-          <td>${vote.answer === data.correctAnswer ? '✅' : '❌'}</td>
+          <td>${vote.isCorrect ? '✅' : '❌'}</td>
           <td>${new Date(vote.time).toLocaleTimeString()}</td>
         `;
-        tbody.appendChild(tr);
+        voteBody.appendChild(tr);
+      });
+
+      // таблица по сводке
+      const summaryBody = document.querySelector('#summary-table tbody');
+      summaryBody.innerHTML = '';
+      data.summary.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${row.name}</td>
+          <td>${row.total}</td>
+          <td>${row.correct}</td>
+          <td>${row.firstCorrects}</td>
+        `;
+        summaryBody.appendChild(tr);
       });
     }
 
